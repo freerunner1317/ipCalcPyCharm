@@ -11,11 +11,11 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-class Ui_ipCalculator(object):
-    def setupUi(self, ipCalculator):
-        ipCalculator.setObjectName("ipCalculator")
-        ipCalculator.resize(837, 453)
-        self.centralwidget = QtWidgets.QWidget(ipCalculator)
+class Ui_MainWindow(object):
+    def setupUi(self, MainWindow):
+        MainWindow.setObjectName("MainWindow")
+        MainWindow.resize(837, 453)
+        self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.label = QtWidgets.QLabel(self.centralwidget)
         self.label.setGeometry(QtCore.QRect(10, 10, 161, 41))
@@ -25,29 +25,29 @@ class Ui_ipCalculator(object):
         font.setWeight(75)
         self.label.setFont(font)
         self.label.setObjectName("label")
-        ipCalculator.setCentralWidget(self.centralwidget)
-        self.menubar = QtWidgets.QMenuBar(ipCalculator)
+        MainWindow.setCentralWidget(self.centralwidget)
+        self.menubar = QtWidgets.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 837, 26))
         self.menubar.setObjectName("menubar")
-        ipCalculator.setMenuBar(self.menubar)
-        self.statusbar = QtWidgets.QStatusBar(ipCalculator)
+        MainWindow.setMenuBar(self.menubar)
+        self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
-        ipCalculator.setStatusBar(self.statusbar)
+        MainWindow.setStatusBar(self.statusbar)
 
-        self.retranslateUi(ipCalculator)
-        QtCore.QMetaObject.connectSlotsByName(ipCalculator)
+        self.retranslateUi(MainWindow)
+        QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
-    def retranslateUi(self, ipCalculator):
+    def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        ipCalculator.setWindowTitle(_translate("ipCalculator", "MainWindow"))
-        self.label.setText(_translate("ipCalculator", "IPv4 адрес"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "IPv4 Calculator"))
+        self.label.setText(_translate("MainWindow", "IPv4 адрес"))
 
 
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
-    ipCalculator = QtWidgets.QMainWindow()
-    ui = Ui_ipCalculator()
-    ui.setupUi(ipCalculator)
-    ipCalculator.show()
+    MainWindow = QtWidgets.QMainWindow()
+    ui = Ui_MainWindow()
+    ui.setupUi(MainWindow)
+    MainWindow.show()
     sys.exit(app.exec_())
