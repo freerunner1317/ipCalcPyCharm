@@ -1,16 +1,33 @@
-# This is a sample Python script.
+import sys
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
-
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+from PyQt5 import  uic
+from PyQt5.QtWidgets import QMainWindow, QApplication
 
 
-# Press the green button in the gutter to run the script.
+
+def calculate():
+    print("Рассчет")
+
+
+
+class MainWindow(QMainWindow):
+   def __init__(self):
+      super(MainWindow, self).__init__()
+      uic.loadUi('gui.ui', self)
+
+
+
+
 if __name__ == '__main__':
-    print_hi('PyCharm')
+    app =  QApplication(sys.argv)
+    window = MainWindow()
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    window.lineEdit_ip.editingFinished.connect(calculate)
+    window.lineEdit_mask.editingFinished.connect(calculate)
+
+    window.opacity_effect = QGraphicsOpacityEffect()
+
+
+    window.show()
+    sys.exit(app.exec_())
+
