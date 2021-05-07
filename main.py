@@ -1,14 +1,14 @@
 import sys
 
-from PyQt5 import  uic
-from PyQt5.QtWidgets import QMainWindow, QApplication
-
+from PyQt5 import uic
+from PyQt5.QtWidgets import *
 
 
 def calculate():
     print("Рассчет")
 
-
+def clear():
+    print("clear")
 
 class MainWindow(QMainWindow):
    def __init__(self):
@@ -25,7 +25,7 @@ if __name__ == '__main__':
     window.lineEdit_ip.editingFinished.connect(calculate)
     window.lineEdit_mask.editingFinished.connect(calculate)
 
-    window.opacity_effect = QGraphicsOpacityEffect()
+    window.lineEdit_ip.returnPressed.connect(clear)
 
 
     window.show()
