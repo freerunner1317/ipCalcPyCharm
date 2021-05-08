@@ -8,6 +8,8 @@ from PyQt5.QtGui import QRegExpValidator
 
 def calculate():
     print("Рассчет")
+
+############### парсинг введеной строки в
     mask = window.lineEdit_mask.text()
     mask_octets_dec = [int(x) for x in mask.split('.')];
     mask_octets_dec_reverse = [(255 - int(x)) for x in mask.split('.')]
@@ -17,7 +19,6 @@ def calculate():
     prefix = 0
     for i in mask_octets_dec:
         prefix += bin(i).count('1')
-    print(prefix)
 
 ############### получение введенного ip и разбиение его на октеты в виде списка
     ip_addr = window.lineEdit_ip.text()
@@ -57,7 +58,6 @@ def calculate():
     print_ip_network_addr = []
     for i, x in enumerate(mask_octets_dec):
         print_ip_network_addr.append(x & ip_octets_dec[i])
-   # window.tableWidget.setItem(4, 0, QTableWidgetItem('.'.join(print_ip_network_addr)))
     add_to_table(4, 0, print_ip_network_addr, "{:d}")
 
 ############### рассчет и вывод в таблицу ip адреса сети в hex
@@ -72,7 +72,6 @@ def calculate():
     ip_open = []
     for i, x in enumerate(print_ip_network_addr):
         ip_open.append(x | mask_octets_dec_reverse[i])
-
     add_to_table(5, 0, ip_open, "{:d}")
 
 ############### вывод в таблицу широковещательного адреса в hex
@@ -96,9 +95,7 @@ def calculate():
     ip_last_host = []
     for i, x in enumerate(mask_octets_dec_reverse):
         ip_last_host.append(x | ip_octets_dec[i])
-    print(ip_last_host[-1])
     ip_last_host[-1] -= 1
-    print(ip_last_host[-1])
     add_to_table(7, 0, ip_last_host, "{:d}")
 
 ############### рассчет и вывод в таблицу адреса последнего хоста hex
@@ -119,10 +116,6 @@ def add_to_table(row, column, data, type_print):
         print_str.append(type_print.format(i))
     window.tableWidget.setItem(row, column, QTableWidgetItem('.'.join(print_str)))
 
-def clear():
-    print("clear")
-    window.lineEdit_ip.clear()
-
 class MainWindow(QMainWindow):
    def __init__(self):
       super(MainWindow, self).__init__()
@@ -138,7 +131,7 @@ if __name__ == '__main__':
     window.lineEdit_ip.editingFinished.connect(calculate)       # при окончании редактирования вызов функции перерасчета
     window.lineEdit_mask.editingFinished.connect(calculate)     #
 
-    window.tableWidget.setEditTriggers(QAbstractItemView.NoEditTriggers); # запрет редактирования таблицы
+    window.tableWidget.setEditTriggers(QAbstractItemView.NoEditTriggers) # запрет редактирования таблицы
 
     reg_ex = QRegExp("([0-9]{1,3}\.){3}[0-9]{1,3}") # валидатор ip адреса, не позволяет ввести бред
     input_validator = QRegExpValidator(reg_ex, window.lineEdit_ip)
