@@ -110,7 +110,7 @@ def calculate():
 ############### рассчет и вывод в таблицу количество доступных адресов
     window.tableWidget.setItem(9, 0, QTableWidgetItem(str(2 ** (prefix) - 2)))
 
-def add_to_table(row, column, data, type_print):
+def add_to_table(row, column, data, type_print):    # функция для вывода значения в ячейку таблицы определенного формата
     print_str = []
     for i in data:
         print_str.append(type_print.format(i))
@@ -130,11 +130,11 @@ if __name__ == '__main__':
 
 
     window.lineEdit_ip.editingFinished.connect(calculate)       # при окончании редактирования вызов функции перерасчета
-    window.comboBox.activated[str].connect(calculate)
+    window.comboBox.activated[str].connect(calculate)           # при выборе маски из комбо бокса вызов функции перерасчета
 
     window.tableWidget.setEditTriggers(QAbstractItemView.NoEditTriggers) # запрет редактирования таблицы
 
-    reg_ex = QRegExp("([0-9]{1,3}\.){3}[0-9]{1,3}") # валидатор ip адреса, не позволяет ввести бред
+    reg_ex = QRegExp("([0-9]{1,3}\.){3}[0-9]{1,3}") # валидатор ip адреса, не позволяет ввести неправильные символы
     input_validator = QRegExpValidator(reg_ex, window.lineEdit_ip)
     window.lineEdit_ip.setValidator(input_validator)
 
