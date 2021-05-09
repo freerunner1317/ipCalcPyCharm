@@ -7,7 +7,7 @@ from PyQt5.QtGui import *
 
 
 def calculate():
-    print("Рассчет")
+    #print("Рассчет")
 
 ############### парсинг данных из комбо бокса
     mask = window.comboBox.currentText().split('-')[1]
