@@ -2,23 +2,23 @@ import sys
 
 from PyQt5 import uic
 from PyQt5.QtWidgets import *
-from PyQt5.QtCore import QRegExp
-from PyQt5.QtGui import QRegExpValidator
+from PyQt5.QtCore import *
+from PyQt5.QtGui import *
 
 
 def calculate():
     print("Рассчет")
 
-############### парсинг введеной строки в
-    mask = window.lineEdit_mask.text()
+############### парсинг данных из комбо бокса
+    mask = window.comboBox.currentText().split('-')[1]
     mask_octets_dec = [int(x) for x in mask.split('.')];
     mask_octets_dec_reverse = [(255 - int(x)) for x in mask.split('.')]
     mask_octets_str_reverse = [str(255 - int(x)) for x in mask.split('.')]
 
 ############### вычисление префикса исходя из маски
-    prefix = 0
-    for i in mask_octets_dec:
-        prefix += bin(i).count('1')
+    prefix = list(window.comboBox.currentText().split('-')[0])
+    prefix.remove("/")
+    prefix = int(''.join(prefix))
 
 ############### получение введенного ip и разбиение его на октеты в виде списка
     ip_addr = window.lineEdit_ip.text()
@@ -105,10 +105,10 @@ def calculate():
     add_to_table(7, 2, ip_last_host, "{:08b}")
 
 ############### рассчет и вывод в таблицу количество доступных адресов
-    window.tableWidget.setItem(8, 0, QTableWidgetItem(str(2 ** (32 -prefix))))
+    window.tableWidget.setItem(8, 0, QTableWidgetItem(str(2 ** (prefix))))
 
 ############### рассчет и вывод в таблицу количество доступных адресов
-    window.tableWidget.setItem(9, 0, QTableWidgetItem(str(2 ** (32 -prefix) - 2)))
+    window.tableWidget.setItem(9, 0, QTableWidgetItem(str(2 ** (prefix) - 2)))
 
 def add_to_table(row, column, data, type_print):
     print_str = []
@@ -128,8 +128,9 @@ if __name__ == '__main__':
     app =  QApplication(sys.argv)   # создание объекта самого приложения
     window = MainWindow()           # создание объекта единственного окна
 
+
     window.lineEdit_ip.editingFinished.connect(calculate)       # при окончании редактирования вызов функции перерасчета
-    window.lineEdit_mask.editingFinished.connect(calculate)     #
+    window.comboBox.activated[str].connect(calculate)
 
     window.tableWidget.setEditTriggers(QAbstractItemView.NoEditTriggers) # запрет редактирования таблицы
 
@@ -137,9 +138,6 @@ if __name__ == '__main__':
     input_validator = QRegExpValidator(reg_ex, window.lineEdit_ip)
     window.lineEdit_ip.setValidator(input_validator)
 
-    reg_ex = QRegExp("([0-8]{1,3}\.){1,3}[0-8]{1,3}")  # валидатор ip адреса, не позволяет ввести бред
-    input_validator = QRegExpValidator(reg_ex, window.lineEdit_mask)
-    window.lineEdit_mask.setValidator(input_validator)
 
     window.show()
     sys.exit(app.exec_())
